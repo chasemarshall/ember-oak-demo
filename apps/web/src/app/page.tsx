@@ -52,7 +52,7 @@ export default async function HomePage() {
             <Button href={homePage?.hero?.ctaLink || '/menu'} size="lg">
               {homePage?.hero?.ctaText || 'View Menu'}
             </Button>
-            <Button href="/locations" variant="outline" size="lg" className="border-cream text-cream hover:bg-cream hover:text-espresso">
+            <Button href="/locations" variant="outline" size="lg" className="!border-cream !text-cream hover:bg-cream hover:text-espresso">
               Find Us
             </Button>
           </div>
