@@ -60,7 +60,7 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${fraunces.variable} ${jetbrainsMono.variable}`}
     >
-      <body className="min-h-screen flex flex-col antialiased">
+      <body className="min-h-screen flex flex-col antialiased pt-[calc(4rem+env(safe-area-inset-top))]">
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
