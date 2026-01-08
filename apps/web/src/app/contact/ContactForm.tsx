@@ -1,6 +1,6 @@
 'use client'
 
-import { useActionState } from 'react'
+import { useActionState, useState } from 'react'
 import { Button } from '@/components/ui/Button'
 import { submitContactForm, type ContactFormState } from './actions'
 
@@ -9,8 +9,9 @@ export function ContactForm() {
     submitContactForm,
     null
   )
+  const [showForm, setShowForm] = useState(true)
 
-  if (state?.success) {
+  if (state?.success && showForm) {
     return (
       <div className="bg-sage/10 border border-sage/30 rounded-lg p-6">
         <div className="flex items-center gap-3 mb-2">
@@ -19,7 +20,16 @@ export function ContactForm() {
           </svg>
           <h3 className="font-serif text-xl text-espresso">Message Sent!</h3>
         </div>
-        <p className="text-espresso-light">{state.message}</p>
+        <p className="text-espresso-light mb-4">{state.message}</p>
+        <button
+          onClick={() => {
+            setShowForm(false)
+            setTimeout(() => setShowForm(true), 0)
+          }}
+          className="text-ember hover:text-ember-dark font-medium transition-colors"
+        >
+          Send another message
+        </button>
       </div>
     )
   }

@@ -29,13 +29,13 @@ type ButtonProps = ButtonAsButton | ButtonAsLink
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary:
-    'bg-ember text-white hover:bg-ember-dark active:bg-ember-dark/90',
+    'bg-ember text-white hover:bg-ember-dark hover:shadow-md active:bg-ember-dark/90 active:scale-[0.98]',
   secondary:
-    'bg-espresso text-cream hover:bg-espresso-light active:bg-espresso-light/90',
+    'bg-espresso text-cream hover:bg-espresso-light hover:shadow-md active:bg-espresso-light/90 active:scale-[0.98]',
   outline:
-    'border-2 border-espresso text-espresso hover:bg-espresso hover:text-cream',
+    'border-2 border-espresso text-espresso hover:bg-espresso hover:text-cream active:scale-[0.98]',
   ghost:
-    'text-espresso hover:bg-espresso/10 active:bg-espresso/20',
+    'text-espresso hover:bg-espresso/10 active:bg-espresso/20 active:scale-[0.98]',
 }
 
 const sizeStyles: Record<ButtonSize, string> = {
@@ -50,7 +50,7 @@ export const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPr
     ref
   ) {
     const baseStyles =
-      'inline-flex items-center justify-center font-medium rounded-lg transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ember focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none'
+      'inline-flex items-center justify-center font-medium rounded-lg transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ember focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none'
 
     const combinedStyles = `${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]} ${className}`
 

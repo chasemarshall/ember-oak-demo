@@ -164,7 +164,7 @@ export default async function AboutPage() {
       <section className="py-16 md:py-24">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <h2 className="font-serif text-3xl md:text-4xl text-espresso mb-4">
-            Come Say Hello
+            Stop By Sometime
           </h2>
           <p className="text-espresso-light mb-8">
             We're at Division Street and Alberta. Drop by, grab a coffee, and let us know how we're doing.

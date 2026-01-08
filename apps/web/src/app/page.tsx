@@ -44,7 +44,7 @@ export default async function HomePage() {
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url(https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1920&q=80)` }}
         >
-          <div className="absolute inset-0 bg-espresso/60" />
+          <div className="absolute inset-0 bg-espresso/70" />
         </div>
         <div className="relative z-10 text-center px-4 max-w-3xl mx-auto">
           <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-cream mb-6">

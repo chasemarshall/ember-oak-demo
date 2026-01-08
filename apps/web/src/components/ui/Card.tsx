@@ -6,12 +6,12 @@ interface CardProps {
 
 export function Card({ children, className = '', hover = false }: CardProps) {
   const hoverStyles = hover
-    ? 'transition-shadow duration-300 hover:shadow-lg'
+    ? 'transition-all duration-300 hover:shadow-lg hover:-translate-y-1'
     : ''
 
   return (
     <div
-      className={`bg-white rounded-xl shadow-sm overflow-hidden ${hoverStyles} ${className}`}
+      className={`bg-white rounded-xl shadow-sm overflow-hidden group ${hoverStyles} ${className}`}
     >
       {children}
     </div>

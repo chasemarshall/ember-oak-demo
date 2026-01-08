@@ -72,11 +72,19 @@ export default async function MenuPage() {
 
       {/* Menu Sections */}
       <div className="max-w-7xl mx-auto px-4 space-y-16">
+        {itemsByCategory.length === 0 && (
+          <div className="text-center py-12">
+            <p className="text-espresso-light text-lg">Menu items are being updated. Check back soon!</p>
+          </div>
+        )}
         {itemsByCategory.map((category) => (
           <section key={category._id} id={category.slug.current} className="scroll-mt-36">
             <h2 className="font-serif text-2xl md:text-3xl text-espresso mb-8 pb-2 border-b border-espresso/10">
               {category.name}
             </h2>
+            {category.items.length === 0 ? (
+              <p className="text-espresso-light/70 italic">Items coming soon.</p>
+            ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {category.items.map((item) => (
                 <Card key={item._id} hover className="group">
@@ -116,6 +124,7 @@ export default async function MenuPage() {
                 </Card>
               ))}
             </div>
+            )}
           </section>
         ))}
       </div>

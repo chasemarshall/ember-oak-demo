@@ -33,7 +33,7 @@ export function Header() {
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-espresso-light hover:text-espresso transition-colors text-sm font-medium"
+                className="text-espresso-light hover:text-espresso transition-colors text-sm font-medium tracking-wide"
               >
                 {item.name}
               </Link>
@@ -86,27 +86,29 @@ export function Header() {
         </div>
 
         {/* Mobile Navigation */}
-        {mobileMenuOpen && (
-          <div className="md:hidden border-t border-espresso/10">
-            <div className="space-y-1 py-4">
-              {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block px-3 py-2 text-base font-medium text-espresso-light hover:text-espresso hover:bg-espresso/5 rounded-md transition-colors"
-                >
-                  {item.name}
-                </Link>
-              ))}
-              <div className="px-3 py-2">
-                <Button href="/contact" className="w-full">
-                  Contact
-                </Button>
-              </div>
+        <div
+          className={`md:hidden border-t border-espresso/10 overflow-hidden transition-all duration-300 ease-in-out ${
+            mobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+          }`}
+        >
+          <div className="space-y-1 py-4">
+            {navigation.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className="block px-3 py-2 text-base font-medium text-espresso-light hover:text-espresso hover:bg-espresso/5 rounded-md transition-colors"
+              >
+                {item.name}
+              </Link>
+            ))}
+            <div className="px-3 py-2">
+              <Button href="/contact" className="w-full">
+                Contact
+              </Button>
             </div>
           </div>
-        )}
+        </div>
       </nav>
     </header>
   )
