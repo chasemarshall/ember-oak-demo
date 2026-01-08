@@ -20,7 +20,7 @@
 
   /* Font families */
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-serif: var(--font-dm-serif), Georgia, serif;
+  --font-serif: var(--font-fraunces), Georgia, serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
   /* Custom spacing */
