@@ -47,13 +47,13 @@ export default async function HomePage() {
           <div className="absolute inset-0 bg-espresso/70" />
         </div>
         <div className="relative z-10 text-center px-4 max-w-3xl mx-auto">
-          <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-cream mb-6">
+          <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-cream mb-6 animate-fade-in-up">
             {homePage?.hero?.headline || 'Good Coffee Takes Time'}
           </h1>
-          <p className="text-cream/90 text-lg md:text-xl mb-8 max-w-xl mx-auto">
+          <p className="text-cream/90 text-lg md:text-xl mb-8 max-w-xl mx-auto animate-fade-in-up animation-delay-100">
             {homePage?.hero?.subheadline || 'House-roasted beans, local ingredients, and a space to slow down.'}
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up animation-delay-200">
             <Button href={homePage?.hero?.ctaLink || '/menu'} size="lg">
               {homePage?.hero?.ctaText || 'View Menu'}
             </Button>
