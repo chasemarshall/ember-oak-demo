@@ -1,0 +1,19 @@
+{
+  "name": "democoffeeshop",
+  "version": "1.0.0",
+  "private": true,
+  "packageManager": "npm@11.6.2",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "lint": "turbo lint",
+    "studio": "npm run dev --workspace=@emberandoak/studio"
+  },
+  "devDependencies": {
+    "turbo": "^2.7.3"
+  }
+}

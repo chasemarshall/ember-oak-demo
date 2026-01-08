@@ -1,0 +1,94 @@
+@import "tailwindcss";
+
+@theme {
+  /* Colors - Warm, Coffee-Inspired */
+  --color-cream: #FAF7F2;
+  --color-cream-dark: #F0EBE3;
+  --color-espresso: #2C1810;
+  --color-espresso-light: #4A3728;
+  --color-ember: #C65D3B;
+  --color-ember-light: #E07B5C;
+  --color-ember-dark: #A84D2F;
+  --color-oak: #8B7355;
+  --color-oak-light: #A69076;
+  --color-sage: #7D8471;
+  --color-white: #FFFFFF;
+
+  /* Semantic Colors */
+  --color-background: var(--color-cream);
+  --color-foreground: var(--color-espresso);
+
+  /* Font families */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* Custom spacing */
+  --spacing-section: 6rem;
+  --spacing-section-sm: 3rem;
+}
+
+/* Base styles */
+body {
+  background-color: var(--color-cream);
+  color: var(--color-espresso);
+  font-family: var(--font-sans);
+}
+
+/* Typography utilities */
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Focus styles for accessibility */
+*:focus-visible {
+  outline: 2px solid var(--color-ember);
+  outline-offset: 2px;
+}
+
+/* Selection color */
+::selection {
+  background-color: var(--color-ember);
+  color: var(--color-white);
+}
+
+/* Hide scrollbar but keep functionality */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Custom prose styling for rich text */
+.prose-coffee {
+  --tw-prose-body: var(--color-espresso);
+  --tw-prose-headings: var(--color-espresso);
+  --tw-prose-links: var(--color-ember);
+  --tw-prose-quotes: var(--color-espresso-light);
+}
+
+.prose-coffee blockquote {
+  border-left-color: var(--color-ember);
+  font-style: italic;
+}
+
+.prose-coffee a {
+  text-decoration: underline;
+  text-decoration-color: var(--color-ember);
+  text-underline-offset: 2px;
+}
+
+.prose-coffee a:hover {
+  color: var(--color-ember);
+}
