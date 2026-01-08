@@ -1,6 +1,6 @@
 export const dynamic = 'force-dynamic'
 
-import { client } from '@/lib/sanity'
+import { client, urlFor } from '@/lib/sanity'
 import { homePageQuery, featuredItemsQuery, upcomingEventsQuery, primaryLocationQuery } from '@/lib/sanity/queries'
 import { Button } from '@/components/ui/Button'
 import { Card, CardImage, CardContent, CardTitle, CardDescription } from '@/components/ui/Card'
@@ -9,13 +9,18 @@ import type { HomePage, MenuItem, Event, Location } from '@/lib/sanity/types'
 
 // Fetch data from Sanity
 async function getHomeData() {
-  const [homePage, featuredItems, upcomingEvents, primaryLocation] = await Promise.all([
-    client.fetch<HomePage>(homePageQuery),
-    client.fetch<MenuItem[]>(featuredItemsQuery),
-    client.fetch<Event[]>(upcomingEventsQuery),
-    client.fetch<Location>(primaryLocationQuery),
-  ])
-  return { homePage, featuredItems, upcomingEvents, primaryLocation }
+  try {
+    const [homePage, featuredItems, upcomingEvents, primaryLocation] = await Promise.all([
+      client.fetch<HomePage>(homePageQuery),
+      client.fetch<MenuItem[]>(featuredItemsQuery),
+      client.fetch<Event[]>(upcomingEventsQuery),
+      client.fetch<Location>(primaryLocationQuery),
+    ])
+    return { homePage, featuredItems: featuredItems ?? [], upcomingEvents: upcomingEvents ?? [], primaryLocation }
+  } catch (error) {
+    console.error('Failed to fetch home data:', error)
+    return { homePage: null, featuredItems: [], upcomingEvents: [], primaryLocation: null }
+  }
 }
 
 function formatDate(dateString: string) {
@@ -76,7 +81,7 @@ export default async function HomePage() {
               <Card key={item._id} hover>
                 <CardImage className="aspect-[4/3]">
                   <img
-                    src={item.image ? `https://cdn.sanity.io/images/vef3nzbe/production/${item.image.asset._ref.replace('image-', '').replace('-jpg', '.jpg').replace('-png', '.png').replace('-webp', '.webp')}?w=600` : 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600&q=80'}
+                    src={item.image?.asset ? urlFor(item.image).width(600).url() : 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600&q=80'}
                     alt={item.name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
@@ -85,7 +90,7 @@ export default async function HomePage() {
                   <div className="flex justify-between items-start mb-2">
                     <CardTitle>{item.name}</CardTitle>
                     <span className="font-mono text-sm text-oak">
-                      ${item.price.toFixed(2)}
+                      ${(item.price ?? 0).toFixed(2)}
                     </span>
                   </div>
                   <CardDescription className="line-clamp-2 mb-3">

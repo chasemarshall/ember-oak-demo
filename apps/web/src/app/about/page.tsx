@@ -5,6 +5,7 @@ import { client } from '@/lib/sanity'
 import { aboutPageQuery, staffQuery } from '@/lib/sanity/queries'
 import { Button } from '@/components/ui/Button'
 import { PortableText } from '@/components/shared/PortableText'
+import { urlFor } from '@/lib/sanity/client'
 import type { AboutPage, StaffMember } from '@/lib/sanity/types'
 
 export const metadata: Metadata = {
@@ -13,16 +14,21 @@ export const metadata: Metadata = {
 }
 
 async function getAboutData() {
-  const [aboutPage, staff] = await Promise.all([
-    client.fetch<AboutPage>(aboutPageQuery),
-    client.fetch<StaffMember[]>(staffQuery),
-  ])
-  return { aboutPage, staff }
+  try {
+    const [aboutPage, staff] = await Promise.all([
+      client.fetch<AboutPage>(aboutPageQuery),
+      client.fetch<StaffMember[]>(staffQuery),
+    ])
+    return { aboutPage, staff: staff ?? [] }
+  } catch (error) {
+    console.error('Failed to fetch about data:', error)
+    return { aboutPage: null, staff: [] }
+  }
 }
 
 function getImageUrl(image: { asset?: { _ref: string } } | undefined) {
-  if (!image?.asset?._ref) return null
-  return `https://cdn.sanity.io/images/vef3nzbe/production/${image.asset._ref.replace('image-', '').replace('-jpg', '.jpg').replace('-png', '.png').replace('-webp', '.webp')}?w=400`
+  if (!image?.asset) return null
+  return urlFor(image).width(400).url()
 }
 
 export default async function AboutPage() {
@@ -67,8 +73,8 @@ export default async function AboutPage() {
               What We Believe
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {aboutPage.values.map((value, i) => (
-                <div key={i} className="bg-white rounded-xl p-6 md:p-8 shadow-sm">
+              {aboutPage.values.map((value) => (
+                <div key={value.title} className="bg-white rounded-xl p-6 md:p-8 shadow-sm">
                   <h3 className="font-serif text-xl text-espresso mb-3">
                     {value.title}
                   </h3>
@@ -90,8 +96,8 @@ export default async function AboutPage() {
               Our Story So Far
             </h2>
             <div className="space-y-8">
-              {aboutPage.timeline.map((item, i) => (
-                <div key={i} className="flex gap-6">
+              {aboutPage.timeline.map((item) => (
+                <div key={`${item.year}-${item.title}`} className="flex gap-6">
                   <div className="flex-shrink-0 w-16">
                     <span className="font-mono text-ember font-bold">{item.year}</span>
                   </div>

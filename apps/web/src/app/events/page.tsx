@@ -6,6 +6,7 @@ import { eventsQuery } from '@/lib/sanity/queries'
 import { Button } from '@/components/ui/Button'
 import { Card, CardImage, CardContent } from '@/components/ui/Card'
 import { Badge } from '@/components/ui/Badge'
+import { urlFor } from '@/lib/sanity/client'
 import type { Event } from '@/lib/sanity/types'
 
 export const metadata: Metadata = {
@@ -14,7 +15,13 @@ export const metadata: Metadata = {
 }
 
 async function getEvents() {
-  return client.fetch<Event[]>(eventsQuery)
+  try {
+    const events = await client.fetch<Event[]>(eventsQuery)
+    return events ?? []
+  } catch (error) {
+    console.error('Failed to fetch events:', error)
+    return []
+  }
 }
 
 function formatDate(dateString: string) {
@@ -29,8 +36,8 @@ function formatDate(dateString: string) {
 }
 
 function getImageUrl(image: Event['image']) {
-  if (!image?.asset?._ref) return 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600&q=80'
-  return `https://cdn.sanity.io/images/vef3nzbe/production/${image.asset._ref.replace('image-', '').replace('-jpg', '.jpg').replace('-png', '.png').replace('-webp', '.webp')}?w=600`
+  if (!image?.asset) return 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600&q=80'
+  return urlFor(image).width(600).url()
 }
 
 function RecurringBadge({ recurring }: { recurring: string | undefined }) {

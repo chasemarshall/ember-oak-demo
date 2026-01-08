@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Button } from '@/components/ui/Button'
+import { ContactForm } from './ContactForm'
 
 export const metadata: Metadata = {
   title: 'Contact',
@@ -50,73 +51,7 @@ export default function ContactPage() {
               Questions, feedback, or just want to say hi? We read everything and try to respond within a day or two.
             </p>
 
-            <form className="space-y-6">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-espresso mb-2">
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    required
-                    className="w-full px-4 py-3 rounded-lg border border-espresso/20 bg-white text-espresso placeholder:text-espresso-light/50 focus:outline-none focus:ring-2 focus:ring-ember focus:border-transparent transition-shadow"
-                    placeholder="Your name"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-espresso mb-2">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    required
-                    className="w-full px-4 py-3 rounded-lg border border-espresso/20 bg-white text-espresso placeholder:text-espresso-light/50 focus:outline-none focus:ring-2 focus:ring-ember focus:border-transparent transition-shadow"
-                    placeholder="you@example.com"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label htmlFor="subject" className="block text-sm font-medium text-espresso mb-2">
-                  What's this about?
-                </label>
-                <select
-                  id="subject"
-                  name="subject"
-                  className="w-full px-4 py-3 rounded-lg border border-espresso/20 bg-white text-espresso focus:outline-none focus:ring-2 focus:ring-ember focus:border-transparent transition-shadow"
-                >
-                  <option value="general">General Question</option>
-                  <option value="feedback">Feedback</option>
-                  <option value="catering">Catering Inquiry</option>
-                  <option value="events">Event / Partnership</option>
-                  <option value="press">Press / Media</option>
-                  <option value="jobs">Jobs / Careers</option>
-                  <option value="other">Something Else</option>
-                </select>
-              </div>
-
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-espresso mb-2">
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  rows={6}
-                  required
-                  className="w-full px-4 py-3 rounded-lg border border-espresso/20 bg-white text-espresso placeholder:text-espresso-light/50 focus:outline-none focus:ring-2 focus:ring-ember focus:border-transparent transition-shadow resize-none"
-                  placeholder="Tell us what's on your mind..."
-                />
-              </div>
-
-              <Button type="submit" size="lg" className="w-full sm:w-auto">
-                Send Message
-              </Button>
-            </form>
+            <ContactForm />
           </div>
 
           {/* Contact Info & FAQ */}
@@ -183,8 +118,8 @@ export default function ContactPage() {
                 Common Questions
               </h2>
               <div className="space-y-6">
-                {faqs.map((faq, i) => (
-                  <div key={i}>
+                {faqs.map((faq) => (
+                  <div key={faq.question}>
                     <h3 className="font-medium text-espresso mb-2">
                       {faq.question}
                     </h3>

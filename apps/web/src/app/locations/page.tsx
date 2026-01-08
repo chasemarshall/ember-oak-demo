@@ -5,6 +5,7 @@ import { client } from '@/lib/sanity'
 import { locationsQuery } from '@/lib/sanity/queries'
 import { Button } from '@/components/ui/Button'
 import { Card, CardImage, CardContent } from '@/components/ui/Card'
+import { urlFor } from '@/lib/sanity/client'
 import type { Location } from '@/lib/sanity/types'
 
 export const metadata: Metadata = {
@@ -13,7 +14,13 @@ export const metadata: Metadata = {
 }
 
 async function getLocations() {
-  return client.fetch<Location[]>(locationsQuery)
+  try {
+    const locations = await client.fetch<Location[]>(locationsQuery)
+    return locations ?? []
+  } catch (error) {
+    console.error('Failed to fetch locations:', error)
+    return []
+  }
 }
 
 const featureLabels: Record<string, { label: string; icon: string }> = {
@@ -54,8 +61,8 @@ function FeatureIcon({ feature }: { feature: string }) {
 }
 
 function getImageUrl(image: Location['image']) {
-  if (!image?.asset?._ref) return 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&q=80'
-  return `https://cdn.sanity.io/images/vef3nzbe/production/${image.asset._ref.replace('image-', '').replace('-jpg', '.jpg').replace('-png', '.png').replace('-webp', '.webp')}?w=800`
+  if (!image?.asset) return 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&q=80'
+  return urlFor(image).width(800).url()
 }
 
 export default async function LocationsPage() {
@@ -148,8 +155,8 @@ export default async function LocationsPage() {
                         Hours
                       </h3>
                       <div className="space-y-1 text-sm text-espresso-light">
-                        {location.hours.map((h, i) => (
-                          <div key={i} className="flex justify-between">
+                        {location.hours.map((h) => (
+                          <div key={h.days} className="flex justify-between">
                             <span>{h.days}</span>
                             <span className="font-mono">{h.hours}</span>
                           </div>

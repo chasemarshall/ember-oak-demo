@@ -5,7 +5,9 @@ import { client } from '@/lib/sanity'
 import { categoriesQuery, menuItemsQuery } from '@/lib/sanity/queries'
 import { Card, CardImage, CardContent, CardTitle, CardDescription } from '@/components/ui/Card'
 import { TagBadge } from '@/components/ui/Badge'
+import { urlFor } from '@/lib/sanity/client'
 import type { Category, MenuItem } from '@/lib/sanity/types'
+import { CategoryNav } from './CategoryNav'
 
 export const metadata: Metadata = {
   title: 'Menu',
@@ -13,11 +15,16 @@ export const metadata: Metadata = {
 }
 
 async function getMenuData() {
-  const [categories, menuItems] = await Promise.all([
-    client.fetch<Category[]>(categoriesQuery),
-    client.fetch<MenuItem[]>(menuItemsQuery),
-  ])
-  return { categories, menuItems }
+  try {
+    const [categories, menuItems] = await Promise.all([
+      client.fetch<Category[]>(categoriesQuery),
+      client.fetch<MenuItem[]>(menuItemsQuery),
+    ])
+    return { categories: categories ?? [], menuItems: menuItems ?? [] }
+  } catch (error) {
+    console.error('Failed to fetch menu data:', error)
+    return { categories: [], menuItems: [] }
+  }
 }
 
 function formatPrice(price: number) {
@@ -35,8 +42,8 @@ function formatVariants(variants: { size: string; price: number }[] | undefined)
 }
 
 function getImageUrl(image: MenuItem['image']) {
-  if (!image?.asset?._ref) return 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600&q=80'
-  return `https://cdn.sanity.io/images/vef3nzbe/production/${image.asset._ref.replace('image-', '').replace('-jpg', '.jpg').replace('-png', '.png').replace('-webp', '.webp')}?w=600`
+  if (!image?.asset) return 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600&q=80'
+  return urlFor(image).width(600).url()
 }
 
 export default async function MenuPage() {
@@ -61,26 +68,12 @@ export default async function MenuPage() {
       </div>
 
       {/* Category Navigation */}
-      <div className="sticky top-16 z-40 bg-cream/95 backdrop-blur-sm border-b border-espresso/10 mb-12">
-        <div className="max-w-7xl mx-auto px-4">
-          <nav className="flex gap-6 overflow-x-auto no-scrollbar py-4">
-            {categories.map((cat) => (
-              <a
-                key={cat._id}
-                href={`#${cat.slug.current}`}
-                className="text-espresso-light hover:text-espresso whitespace-nowrap text-sm font-medium transition-colors"
-              >
-                {cat.name}
-              </a>
-            ))}
-          </nav>
-        </div>
-      </div>
+      <CategoryNav categories={categories} />
 
       {/* Menu Sections */}
       <div className="max-w-7xl mx-auto px-4 space-y-16">
         {itemsByCategory.map((category) => (
-          <section key={category._id} id={category.slug.current}>
+          <section key={category._id} id={category.slug.current} className="scroll-mt-36">
             <h2 className="font-serif text-2xl md:text-3xl text-espresso mb-8 pb-2 border-b border-espresso/10">
               {category.name}
             </h2>
