@@ -15,12 +15,8 @@ export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 border-b border-espresso/10">
-      {/* Solid background for safe area (status bar) */}
-      <div className="absolute inset-0 bottom-auto h-[env(safe-area-inset-top)] bg-cream" />
-      {/* Semi-transparent background for header content */}
-      <div className="absolute inset-0 top-[env(safe-area-inset-top)] bg-cream/95 backdrop-blur-sm" />
-      <nav className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pl-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))] pt-[env(safe-area-inset-top)]">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-cream/95 backdrop-blur-sm border-b border-espresso/10 pt-[env(safe-area-inset-top)]">
+      <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pl-[max(1rem,env(safe-area-inset-left))] pr-[max(1rem,env(safe-area-inset-right))]">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <div className="flex-shrink-0">
